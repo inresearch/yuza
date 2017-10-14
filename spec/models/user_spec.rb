@@ -58,4 +58,14 @@ RSpec.describe User, type: :model do
       expect(subject.errors).to_not include(:email)
     end
   end # email
+
+  describe '#valid_password?' do
+    it 'returns true if password is valid' do
+      expect(subject.valid_password?('Password01')).to eq true
+    end
+
+    it 'returns false if password is invalid' do
+      expect(subject.valid_password?('Password02')).to eq false
+    end
+  end
 end

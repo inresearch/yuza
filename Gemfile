@@ -8,7 +8,9 @@ gem 'rack-cors'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'pry-byebug'
   gem 'rspec-rails', '~> 3.6'
+  gem 'timecop'
 end
 
 group :development do

@@ -17,14 +17,22 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
 end
 
-def build_user
-  User.new(
+def user_attributes
+  {
     name: 'Adam',
     email: 'adam@netinmax.com',
     password: 'Password01'
-  )
+  }
+end
+
+def build_user
+  User.new(user_attributes)
 end
 
 def create_user
   u = build_user; u.save!; u
+end
+
+def parsed_body
+  JSON.parse(response.body).deep_symbolize_keys
 end
