@@ -55,5 +55,24 @@ RSpec.describe UsersController, type: :controller do
       expect(parsed_body[:success]).to eq true
       expect(User.first.valid_password?('Aloha12345', app: 'pageok')).to eq true
     end
+
+    context 'invalid data' do
+      it 'fails gracefully when password too short' do
+        put :update, params: {password: {password: 'a', app: 'pageok'}, id: User.first.id}
+        expect(parsed_body).to eq({
+          succeed: false,
+          errors: {base: "Validation failed: Password is too short (minimum is 8 characters)"},
+          displayable_error: true
+        })
+      end # fail
+
+      it 'fails gracefully when app not present' do
+        put :update, params: {password: {password: 'Password02'}, id: User.first.id}
+        expect(parsed_body).to include({
+          succeed: false,
+          displayable_error: false
+        })
+      end
+    end # invalid data
   end
 end
