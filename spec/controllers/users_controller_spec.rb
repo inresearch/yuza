@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
-  let(:params) { {user: user_attributes } }
+  let(:params) { {user: user_attributes, password: password_attributes} }
   before { params.delete(:id) }
   before { Timecop.freeze(Time.local(2020)) }
   after { Timecop.return }
@@ -50,10 +50,10 @@ RSpec.describe UsersController, type: :controller do
     end
 
     it 'can update password' do
-      expect(User.first.valid_password?('Aloha12345')).to eq false
-      put :update, params: {user: {password: 'Aloha12345'}, id: User.first.id}
+      expect(User.first.valid_password?('Aloha12345', app: 'pageok')).to eq false
+      put :update, params: {password: {password: 'Aloha12345', app: 'pageok'}, id: User.first.id}
       expect(parsed_body[:success]).to eq true
-      expect(User.first.valid_password?('Aloha12345')).to eq true
+      expect(User.first.valid_password?('Aloha12345', app: 'pageok')).to eq true
     end
   end
 end

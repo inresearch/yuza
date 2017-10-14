@@ -10,16 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171013101931) do
+ActiveRecord::Schema.define(version: 20171014022228) do
 
-  create_table "users", id: false, force: :cascade do |t|
-    t.string "id", null: false
+  create_table "passwords", id: :string, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "user_id", null: false
+    t.string "app", null: false
+    t.string "cipher", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["app"], name: "index_passwords_on_app"
+    t.index ["user_id", "app"], name: "index_passwords_on_user_id_and_app", unique: true
+  end
+
+  create_table "users", id: :string, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
     t.string "email", null: false
     t.string "phone"
-    t.string "password_hash", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
 end

@@ -1,23 +1,23 @@
 class User < ApplicationRecord
   self.primary_key = :id
 
-  attr_accessor :password
-  validates_presence_of :id, :name, :email, :password_hash
+  validates_presence_of :id, :name, :email
   validates_format_of :email,:with => /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/
-  validates :password, length: { minimum: 8 }, if: -> { new_record? || password }
+  has_many :passwords
 
   def init_new_record
     self.id = SecureRandom.uuid
   end
 
-  def valid_password?(password)
-    hashed_password = BCrypt::Password.new(password_hash)
-    hashed_password == password
+  def valid_password?(password, app:)
+    is_valid = passwords.where(app: app).first&.valid_password?(password)
+    is_valid = false if is_valid.nil?
+    is_valid
   end
 
-  def password=(new_password)
-    password = BCrypt::Password.create(new_password)
-    self.password_hash = password.to_s
-    @password = new_password
+  def init_new_password(attrs)
+    passwords.new({
+      user_id: id
+    }.merge(attrs))
   end
 end

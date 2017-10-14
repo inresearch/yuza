@@ -20,7 +20,13 @@ end
 def user_attributes
   {
     name: 'Adam',
-    email: 'adam@netinmax.com',
+    email: 'adam@netinmax.com'
+  }
+end
+
+def password_attributes
+  {
+    app: 'pageok',
     password: 'Password01'
   }
 end

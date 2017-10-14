@@ -16,23 +16,6 @@ RSpec.describe User, type: :model do
     end
   end # id
 
-  describe '#password' do
-    it 'generates a hash when assigned' do
-      expect(subject.password_hash).to be_blank
-      subject.password = 'Adam'
-      expect(subject.password_hash).to_not be_blank
-    end
-
-    it 'generates a hash when changed even if with same string' do
-      subject.password = 'Adam'
-      hash1 = subject.password_hash
-      subject.password = 'Adam'
-      hash2 = subject.password_hash
-
-      expect(hash1).to_not eq(hash2)
-    end
-  end # password
-
   describe '#email' do
     it 'rejects invalid email' do
       subject.email = '@'
@@ -58,14 +41,4 @@ RSpec.describe User, type: :model do
       expect(subject.errors).to_not include(:email)
     end
   end # email
-
-  describe '#valid_password?' do
-    it 'returns true if password is valid' do
-      expect(subject.valid_password?('Password01')).to eq true
-    end
-
-    it 'returns false if password is invalid' do
-      expect(subject.valid_password?('Password02')).to eq false
-    end
-  end
 end
