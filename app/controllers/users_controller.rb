@@ -1,4 +1,9 @@
 class UsersController < ApplicationController
+  def show
+    u = User.find(params[:id])
+    render json: UserSerializer.new(u).to_h
+  end
+
   def create
     u = User.new(user_params)
     User.transaction do
