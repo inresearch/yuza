@@ -18,13 +18,14 @@ class UsersController < ApplicationController
   def update
     u = User.find(params[:id])
 
-    if params[:user]
+    if params[:user] && !params[:user].empty?
       u.name = user_params[:name] if user_params[:name]
       u.phone = user_params[:phone] if user_params[:phone]
     end
 
-    if params[:password]
+    if params[:password] && !params[:password].empty?
       password_ins = u.passwords.app(password_params[:app]).first
+      password_ins = u.passwords.new(app: password_params[:app]) unless password_ins
       password_ins.password = password_params[:password] if password_params[:password]
       password_ins.save!
     end

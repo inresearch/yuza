@@ -49,10 +49,18 @@ RSpec.describe UsersController, type: :controller do
       expect(User.first.name).to eq 'Akira'
     end
 
-    it 'can update password' do
+    it 'can update password when password presents' do
       expect(User.first.valid_password?('Aloha12345', app: 'pageok')).to eq false
       put :update, params: {password: {password: 'Aloha12345', app: 'pageok'}, id: User.first.id}
       expect(parsed_body[:success]).to eq true
+      expect(User.first.valid_password?('Aloha12345', app: 'pageok')).to eq true
+    end
+
+    it 'can create password when instance is missing' do
+      User.first.passwords.destroy_all
+      expect(User.first.passwords).to be_empty
+      put :update, params: {password: {password: 'Aloha12345', app: 'pageok'}, id: User.first.id}
+      expect(User.first.passwords).to_not be_empty
       expect(User.first.valid_password?('Aloha12345', app: 'pageok')).to eq true
     end
 
@@ -70,7 +78,6 @@ RSpec.describe UsersController, type: :controller do
         put :update, params: {password: {password: 'Password02'}, id: User.first.id}
         expect(parsed_body).to include({
           success: false,
-          displayable_error: false
         })
       end
     end # invalid data
