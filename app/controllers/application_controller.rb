@@ -3,7 +3,7 @@ class ApplicationController < ActionController::API
     whitelisted = [ActiveRecord::RecordInvalid]
     is_displayable = whitelisted.include?(exception.class)
     render json: {
-      succeed: false,
+      success: false,
       errors: {base: exception.message},
       displayable_error: is_displayable
     }
