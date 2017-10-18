@@ -56,6 +56,11 @@ describe SessionsController, type: :controller do
     end # DELETE #revoke
   end # revoking session
 
-  context 'checking validity' do
-  end
+  describe 'GET #show' do
+    let(:session) { create_session(user) }
+    it 'display the record in JSON format' do
+      get :show, params: {code: session.code}
+      expect(parsed_body).to eq SessionSerializer.new(session).to_h
+    end
+  end # GET #show
 end # SessionsController

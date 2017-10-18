@@ -36,6 +36,9 @@ class SessionsController < ApplicationController
     render json: SessionSerializer.new(s).to_h
   end
 
-  def verify
+  def show
+    code = params[:code]
+    s = Session.where(code: code).first!
+    render json: SessionSerializer.new(s).to_h
   end
 end
