@@ -8,5 +8,15 @@ class Session < ApplicationRecord
   def init_new_record
     self.id = SecureRandom.uuid
     self.code = SecureRandom.hex(50)
+    self.revoked = false
+  end
+
+  def invalid?
+    revoked? || (Time.current > expiry_time)
+  end
+
+  def invalidate!
+    self.revoked = true
+    self.save!
   end
 end

@@ -29,6 +29,13 @@ class SessionsController < ApplicationController
     render json: SessionSerializer.new(s).to_h
   end # create
 
+  def revoke
+    code = params[:session][:code]
+    s = Session.where(code: code).first!
+    s.invalidate!
+    render json: SessionSerializer.new(s).to_h
+  end
+
   def verify
   end
 end

@@ -12,6 +12,7 @@ class SessionSerializer
       code: @session.code,
       app: @session.app,
       expiry_time: @session.expiry_time.to_f,
+      invalid: @session.invalid?,
       user: {
         id: @session.user.id,
         email: @session.user.email

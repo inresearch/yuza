@@ -7,12 +7,14 @@ class CreateSessions < ActiveRecord::Migration[5.1]
       t.string :app, null: false
       t.datetime :expiry_time, null: false
       t.string :ip
+      t.boolean :revoked, null: false, default: false
 
       t.timestamps
     end
 
     add_index :sessions, :app
     add_index :sessions, [:user_id, :code], unique: true
+    add_index :sessions, :code
     execute "ALTER TABLE sessions ADD PRIMARY KEY (id);"
   end
 end

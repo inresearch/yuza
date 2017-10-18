@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20171016002508) do
     t.string "app", null: false
     t.datetime "expiry_time", null: false
     t.string "ip"
+    t.boolean "revoked", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["app"], name: "index_sessions_on_app"
