@@ -5,6 +5,8 @@ class User < ApplicationRecord
   validates_format_of :email,:with => /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/
   has_many :passwords
 
+  scope :email, -> (email) { where(email: email) }
+
   def init_new_record
     self.id = SecureRandom.uuid
   end

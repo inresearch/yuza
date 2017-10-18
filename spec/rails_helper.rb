@@ -39,6 +39,10 @@ def create_user
   u = build_user; u.save!; u
 end
 
+def create_password(u, attributes={})
+  u.init_new_password(attributes).save!
+end
+
 def parsed_body
   JSON.parse(response.body).deep_symbolize_keys
 end
