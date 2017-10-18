@@ -24,6 +24,8 @@ class SessionsController < ApplicationController
         Raven.capture_exception(e)
         raise e
       end
+    else
+      fail InvalidCredentialError, "Invalid credential"
     end # is_valid
 
     render json: SessionSerializer.new(s).to_h
@@ -32,7 +34,7 @@ class SessionsController < ApplicationController
   def revoke
     code = params[:session][:code]
     s = Session.where(code: code).first!
-    s.invalidate!
+    s.revoke!
     render json: SessionSerializer.new(s).to_h
   end
 

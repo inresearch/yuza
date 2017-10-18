@@ -20,8 +20,8 @@ describe Session, type: :model do
   context 'when manually revoked' do
     it 'reports as invalid' do
       expect(subject.invalid?).to be false
-      subject.invalidate!
+      subject.revoke!
       expect(subject.invalid?).to be true
     end
   end
-end
+end # Session

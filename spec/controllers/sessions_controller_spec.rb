@@ -21,7 +21,7 @@ describe SessionsController, type: :controller do
     }
 
     describe 'POST #create' do
-      it 'can create the session' do
+      it 'can create the session when given correct credential' do
         expect(Session.count).to eq 0
         post :create, params: params
         expect(Session.count).to eq 1
@@ -31,6 +31,12 @@ describe SessionsController, type: :controller do
         expect(session.expiry_time > 28.minutes.from_now).to be true
         expect(session.ip).to_not be_blank
         expect(session.invalid?).to be false
+      end
+
+      it 'raises Invalid credential error when incorrect credential given' do
+        params[:session][:user][:password] = 'INVPWDHAHA'
+        post :create, params: params
+        expect(parsed_body[:errors][:base]).to eq "Invalid credential"
       end
     end # POST create
   end # creating session
@@ -61,6 +67,7 @@ describe SessionsController, type: :controller do
     it 'display the record in JSON format' do
       get :show, params: {code: session.code}
       expect(parsed_body).to eq SessionSerializer.new(session).to_h
+      expect(parsed_body[:data][:user][:id]).to eq session.user_id
     end
   end # GET #show
 end # SessionsController

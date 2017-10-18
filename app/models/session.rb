@@ -15,7 +15,7 @@ class Session < ApplicationRecord
     revoked? || (Time.current > expiry_time)
   end
 
-  def invalidate!
+  def revoke!
     self.revoked = true
     self.save!
   end

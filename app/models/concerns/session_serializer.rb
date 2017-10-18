@@ -16,7 +16,9 @@ class SessionSerializer
       user: {
         id: @session.user.id,
         email: @session.user.email
-      }
+      },
+      created_at: @session.created_at.to_f,
+      updated_at: @session.updated_at.to_f
     }
     data
   end

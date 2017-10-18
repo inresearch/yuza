@@ -1,0 +1,1 @@
+InvalidCredentialError = Class.new(StandardError)
