@@ -4,6 +4,7 @@ class User < ApplicationRecord
   validates_presence_of :id, :name, :email
   validates_format_of :email,:with => /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/
   has_many :passwords
+  has_many :sessions
 
   scope :email, -> (email) { where(email: email) }
 
