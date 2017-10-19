@@ -32,7 +32,7 @@ class SessionsController < ApplicationController
   end # create
 
   def revoke
-    code = params[:session][:code]
+    code = params[:code]
     s = Session.where(code: code).first!
     s.revoke!
     render json: SessionSerializer.new(s).to_h
