@@ -6,6 +6,9 @@ class CreateUsers < ActiveRecord::Migration[5.1]
       t.string :email, null: false
       t.string :phone
 
+      # internal user can access Yuza admin panel
+      t.boolean :is_internal, null: false, default: false
+
       t.timestamps
     end
 

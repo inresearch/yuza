@@ -1,25 +1,23 @@
-class Serializer::SessionSerializer
-  def initialize(session)
-    @session = session
-  end
-
-  def to_h
-    data = {}
-    data[:success] = !@session.new_record? && @session.errors.blank?
-    data[:errors] = @session.errors.to_h
-    data[:data] = {
-      id: @session.id,
-      code: @session.code,
-      app: @session.app,
-      expiry_time: @session.expiry_time.to_f,
-      invalid: @session.invalid?,
-      user: {
-        id: @session.user.id,
-        email: @session.user.email
-      },
-      created_at: @session.created_at.to_f,
-      updated_at: @session.updated_at.to_f
-    }
-    data
+module Serializer
+  class SessionSerializer < BaseSerializer
+    def to_h
+      data = {}
+      data[:success] = success?
+      data[:errors] = errors
+      data[:data] = {
+        id: object.id,
+        code: object.code,
+        app: object.app,
+        expiry_time: object.expiry_time.to_f,
+        invalid: object.invalid?,
+        user: {
+          id: object.user.id,
+          email: object.user.email
+        },
+        created_at: object.created_at.to_f,
+        updated_at: object.updated_at.to_f
+      }
+      data
+    end
   end
 end

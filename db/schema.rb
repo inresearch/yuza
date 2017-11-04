@@ -10,7 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171020051006) do
+ActiveRecord::Schema.define(version: 20171104095425) do
+
+  create_table "action_requests", id: :string, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "host_id", null: false
+    t.string "request", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "hosts", id: :string, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "domain", null: false
+    t.string "name", null: false
+    t.string "color", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["domain"], name: "index_hosts_on_domain", unique: true
+  end
 
   create_table "passwords", id: :string, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "user_id", null: false
@@ -40,6 +56,7 @@ ActiveRecord::Schema.define(version: 20171020051006) do
     t.string "name", null: false
     t.string "email", null: false
     t.string "phone"
+    t.boolean "is_internal", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "dimensions", limit: 4294967295

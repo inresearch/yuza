@@ -25,14 +25,20 @@ def create_password(u, attributes={})
 end
 
 def create_session(u, app='pageok')
-  s = Session.new(
+  Session.create!(
     user: u,
     app: app,
     expiry_time: 30.minutes.from_now,
     ip: '127.0.0.1'
   )
-  s.save!
-  s
+end
+
+def create_host
+  Host.create!(
+    domain: 'pageok.com',
+    name: 'pageok',
+    color: '#dfdfdf'
+  ) 
 end
 
 def parsed_body

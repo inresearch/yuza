@@ -7,18 +7,16 @@ describe Api::SessionsController, type: :controller do
   }
 
   context 'creating session' do
-    let(:params) {
-      {
-        session: {
-          user: {
-            email: user.email,
-            password: 'Password01',
-            app: 'pageok'
-          },
-          validity_minutes: 30
-        }
+    let(:params) {{
+      session: {
+        user: {
+          email: user.email,
+          password: 'Password01',
+          app: 'pageok'
+        },
+        validity_minutes: 30
       }
-    }
+    }}
 
     describe 'POST #create' do
       it 'can create the session when given correct credential' do
