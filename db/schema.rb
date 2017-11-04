@@ -23,9 +23,11 @@ ActiveRecord::Schema.define(version: 20171104095425) do
     t.string "domain", null: false
     t.string "name", null: false
     t.string "color", null: false
+    t.string "secret", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["domain"], name: "index_hosts_on_domain", unique: true
+    t.index ["secret"], name: "index_hosts_on_secret", unique: true
   end
 
   create_table "passwords", id: :string, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

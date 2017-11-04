@@ -5,11 +5,13 @@ class CreateHosts < ActiveRecord::Migration[5.1]
       t.string :domain, null: false
       t.string :name, null: false
       t.string :color, null: false
+      t.string :secret, null: false
 
       t.timestamps
     end
 
     add_index :hosts, :domain, unique: true
+    add_index :hosts, :secret, unique: true
     execute "ALTER TABLE hosts ADD PRIMARY KEY (id);"
   end
 end

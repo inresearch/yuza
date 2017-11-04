@@ -1,4 +1,6 @@
 class Api::UsersController < Api::ApiController
+  before_action :auth_by_domain!
+
   def show
     u = User.find(params[:id])
     render json: Serializer::UserSerializer.new(u).to_h

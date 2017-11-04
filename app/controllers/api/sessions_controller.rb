@@ -1,4 +1,6 @@
 class Api::SessionsController < Api::ApiController
+  before_action :auth_by_domain!
+
   def create
     create_params = params.require(:session).permit(
       :validity_minutes,

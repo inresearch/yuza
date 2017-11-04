@@ -1,6 +1,7 @@
 require "rails_helper"
 
 describe Api::SessionsController, type: :controller do
+  let(:host) { create_host }
   let(:user) { create_user }
   before {
     create_password(user, password_attributes)
@@ -15,7 +16,8 @@ describe Api::SessionsController, type: :controller do
           app: 'pageok'
         },
         validity_minutes: 30
-      }
+      },
+      host: {secret: host.secret}
     }}
 
     describe 'POST #create' do
@@ -41,7 +43,7 @@ describe Api::SessionsController, type: :controller do
 
   context 'revoking session' do
     let(:session) { create_session(user) }
-    let(:params) { {code: session.code} }
+    let(:params) { {code: session.code, host: {secret: host.secret}} }
 
     describe 'DELETE #revoke' do
       it 'can invalidate a session' do
@@ -57,7 +59,7 @@ describe Api::SessionsController, type: :controller do
   describe 'GET #show' do
     let(:session) { create_session(user) }
     it 'display the record in JSON format' do
-      get :show, params: {code: session.code}
+      get :show, params: {code: session.code, host: {secret: host.secret}}
       expect(parsed_body).to eq Serializer::SessionSerializer.new(session).to_h
       expect(parsed_body[:data][:user][:id]).to eq session.user_id
     end

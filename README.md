@@ -1,6 +1,6 @@
 # Yuza
 
-Yuza is a user service.
+Yuza is a user service. [Netvice](https://github.com/inresearch/netvice) wrapper available.
 
 ```
              Prefix Verb   URI Pattern                          Controller#Action
@@ -16,21 +16,18 @@ Yuza is a user service.
 api_action_requests POST   /api/action_requests(.:format)       api/action_requests#create
 ```
 
-Yuza is accessible through Netvice.
-
 ## Architecture in Nutshell
 
 Yuza is created with high reusability in mind first, and extensibility second.
 Basic premises:
 
-- Yuza is a single-service that can be used by a lot of different apps with their
-  own differing set of users (users are not sharing).
-- Same user in different app can have different password.
+- Yuza is a single-service that can be used by a lot of different apps with no data sharing.
+  As consequence, the same user in different app can have different password/settings.
 - Yuza does not handle session of its client applications.
 - Yuza does handle signup with Facebook.
 - Some request needs to generate a request token before it can be made/executed
 
-## Request that needs token
+## Request that necessitate a token
 
 Yuza requires a token to be generated in advance before doing the following requests
 through its user interface:

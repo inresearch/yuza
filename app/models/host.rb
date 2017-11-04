@@ -6,5 +6,6 @@ class Host < ApplicationRecord
 
   def init_new_record
     self.id = SecureRandom.uuid
+    self.secret = SecureRandom.hex(64)
   end
 end
