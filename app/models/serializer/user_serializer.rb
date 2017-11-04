@@ -1,4 +1,4 @@
-class UserSerializer
+class Serializer::UserSerializer
   def initialize(user)
     @user = user
   end

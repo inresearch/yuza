@@ -1,4 +1,4 @@
-class SessionSerializer
+class Serializer::SessionSerializer
   def initialize(session)
     @session = session
   end

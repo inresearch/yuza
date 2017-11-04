@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe UsersController, type: :controller do
+RSpec.describe Api::UsersController, type: :controller do
   let(:params) { {user: user_attributes, password: password_attributes} }
   before { params.delete(:id) }
   before { Timecop.freeze(Time.local(2020)) }

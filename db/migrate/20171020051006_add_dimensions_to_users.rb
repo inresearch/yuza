@@ -1,5 +1,5 @@
 class AddDimensionsToUsers < ActiveRecord::Migration[5.1]
   def change
-    add_column :users, :dimensions
+    add_column :users, :dimensions, :longtext
   end
 end

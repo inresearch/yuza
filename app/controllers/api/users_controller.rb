@@ -1,7 +1,7 @@
-class UsersController < ApplicationController
+class Api::UsersController < Api::ApiController
   def show
     u = User.find(params[:id])
-    render json: UserSerializer.new(u).to_h
+    render json: Serializer::UserSerializer.new(u).to_h
   end
 
   def create
@@ -12,7 +12,7 @@ class UsersController < ApplicationController
       password_ins.save
       raise ActiveRecord::Rollback if u.id.blank? || password_ins.id.blank?
     end
-    render json: UserSerializer.new(u).to_h
+    render json: Serializer::UserSerializer.new(u).to_h
   end
 
   def update
@@ -31,7 +31,7 @@ class UsersController < ApplicationController
     end
 
     u.save
-    render json: UserSerializer.new(u).to_h
+    render json: Serializer::UserSerializer.new(u).to_h
   end
 
   def user_params
@@ -40,5 +40,5 @@ class UsersController < ApplicationController
 
   def password_params
     params.require(:password).permit(:app, :password)
-  end
+  end  
 end

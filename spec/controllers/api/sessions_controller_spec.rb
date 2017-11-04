@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe SessionsController, type: :controller do
+describe Api::SessionsController, type: :controller do
   let(:user) { create_user }
   before {
     create_password(user, password_attributes)
@@ -43,13 +43,7 @@ describe SessionsController, type: :controller do
 
   context 'revoking session' do
     let(:session) { create_session(user) }
-    let(:params) {
-      {
-        session: {
-          code: session.code
-        }
-      }
-    }
+    let(:params) { {code: session.code} }
 
     describe 'DELETE #revoke' do
       it 'can invalidate a session' do
@@ -66,7 +60,7 @@ describe SessionsController, type: :controller do
     let(:session) { create_session(user) }
     it 'display the record in JSON format' do
       get :show, params: {code: session.code}
-      expect(parsed_body).to eq SessionSerializer.new(session).to_h
+      expect(parsed_body).to eq Serializer::SessionSerializer.new(session).to_h
       expect(parsed_body[:data][:user][:id]).to eq session.user_id
     end
   end # GET #show

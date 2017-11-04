@@ -1,4 +1,4 @@
-class SessionsController < ApplicationController
+class Api::SessionsController < Api::ApiController
   def create
     create_params = params.require(:session).permit(
       :validity_minutes,
@@ -28,19 +28,19 @@ class SessionsController < ApplicationController
       fail InvalidCredentialError, "Invalid credential"
     end # is_valid
 
-    render json: SessionSerializer.new(s).to_h
+    render json: Serializer::SessionSerializer.new(s).to_h
   end # create
 
   def revoke
     code = params[:code]
     s = Session.where(code: code).first!
     s.revoke!
-    render json: SessionSerializer.new(s).to_h
+    render json: Serializer::SessionSerializer.new(s).to_h
   end
 
   def show
     code = params[:code]
     s = Session.where(code: code).first!
-    render json: SessionSerializer.new(s).to_h
-  end
+    render json: Serializer::SessionSerializer.new(s).to_h
+  end	
 end
