@@ -1,0 +1,45 @@
+// Place all the styles related to the Users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #eee;
+
+  > .container {
+    padding: 60px 15px 0;
+  }
+}
+
+.focal-form {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+
+  .form-heading, .checkbox {
+    margin-bottom: 10px;
+  }
+
+  .checkbox {
+    font-weight: 400;
+  }
+
+  .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+
+    &:focus {
+      z-index: 2;
+    }
+  }
+
+  input[type='email'], input[type='password'] {
+    margin-bottom: 5px;
+  }
+
+  input {border-radius: 0}
+}

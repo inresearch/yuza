@@ -1,0 +1,17 @@
+doctype html
+
+html
+  head
+    title Yuza
+    = csrf_meta_tags
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track' => 'reload'
+  body
+    header
+      nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark
+        a.navbar-brand href='#' Sitename
+    main.container role='main'
+      = yield
+    footer.footer
+      .container
+        span.text-muted Copyright (C) Sitename

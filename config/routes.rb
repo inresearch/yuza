@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
-  get 'users/signin'
-
-  get 'users/signup'
+  resources :users, only: [] do
+    collection do
+      get 'signin'
+      get 'signup'
+    end
+  end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   namespace :api do

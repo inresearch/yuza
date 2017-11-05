@@ -16,6 +16,9 @@ gem 'jbuilder', '~> 2.5'
 gem 'bcrypt', '~> 3.1.7'
 gem 'rack-cors'
 gem 'slim'
+gem 'activeadmin'
+gem 'bootstrap', '4.0.0.beta2.1'
+gem 'jquery-rails'
 
 group :development, :test do
   gem 'pry-byebug'
