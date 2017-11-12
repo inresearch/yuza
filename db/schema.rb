@@ -10,13 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171104095425) do
+ActiveRecord::Schema.define(version: 20171105072409) do
 
   create_table "action_requests", id: :string, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "host_id", null: false
     t.string "request", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "namespace"
+    t.text "body"
+    t.string "resource_type"
+    t.bigint "resource_id"
+    t.string "author_type"
+    t.bigint "author_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
+    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
+    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
   end
 
   create_table "hosts", id: :string, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -28,16 +42,6 @@ ActiveRecord::Schema.define(version: 20171104095425) do
     t.datetime "updated_at", null: false
     t.index ["domain"], name: "index_hosts_on_domain", unique: true
     t.index ["secret"], name: "index_hosts_on_secret", unique: true
-  end
-
-  create_table "passwords", id: :string, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "user_id", null: false
-    t.string "app", null: false
-    t.string "cipher", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["app"], name: "index_passwords_on_app"
-    t.index ["user_id", "app"], name: "index_passwords_on_user_id_and_app", unique: true
   end
 
   create_table "sessions", id: :string, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -55,14 +59,16 @@ ActiveRecord::Schema.define(version: 20171104095425) do
   end
 
   create_table "users", id: :string, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "host_id", null: false
     t.string "name", null: false
     t.string "email", null: false
-    t.string "phone"
+    t.string "password_cipher", null: false
     t.boolean "is_internal", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "dimensions", limit: 4294967295
-    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["host_id", "email"], name: "index_users_on_host_id_and_email", unique: true
+    t.index ["password_cipher"], name: "index_users_on_password_cipher"
   end
 
 end

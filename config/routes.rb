@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
+  ActiveAdmin.routes(self)
   resources :users, only: [] do
     collection do
       get 'signin'
       get 'signup'
+      post :signin, to: 'users#process_signin', as: :process_signin
+      post :signup, to: 'users#process_signup', as: :process_signup
     end
   end
 

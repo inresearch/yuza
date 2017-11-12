@@ -8,7 +8,6 @@ module Serializer
         id: object.id,
         name: object.name,
         email: object.email,
-        phone: object.phone,
         created_at: object.created_at.to_f,
         updated_at: object.updated_at.to_f
       }

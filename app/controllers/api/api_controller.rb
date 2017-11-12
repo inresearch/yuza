@@ -9,6 +9,9 @@ class Api::ApiController < ActionController::API
     }
   end  
 
+  def client_host
+  end
+
   def auth_by_domain!
     host_params = params.require(:host).permit(:secret)
     host = Host.find_by_secret(host_params[:secret])

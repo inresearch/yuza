@@ -8,12 +8,7 @@ class Api::UsersController < Api::ApiController
 
   def create
     u = User.new(user_params)
-    User.transaction do
-      u.save
-      password_ins = u.init_new_password(password_params)
-      password_ins.save
-      raise ActiveRecord::Rollback if u.id.blank? || password_ins.id.blank?
-    end
+    u.save
     render json: Serializer::UserSerializer.new(u).to_h
   end
 
@@ -22,7 +17,6 @@ class Api::UsersController < Api::ApiController
 
     if params[:user] && !params[:user].empty?
       u.name = user_params[:name] if user_params[:name]
-      u.phone = user_params[:phone] if user_params[:phone]
     end
 
     if params[:password] && !params[:password].empty?
@@ -37,10 +31,6 @@ class Api::UsersController < Api::ApiController
   end
 
   def user_params
-    params.require(:user).permit(:id, :name, :email, :phone, :password)
+    params.require(:user).permit(:id, :name, :email, :password)
   end
-
-  def password_params
-    params.require(:password).permit(:app, :password)
-  end  
 end

@@ -1,0 +1,12 @@
+= form_tag process_signup_users_path, class: 'focal-form' do
+  h2.form-heading.text-muted please signup
+
+  input.form-control type='text' name='user[name]' placeholder='name'
+
+  input.form-control type='email' name='user[email]' placeholder='email'
+
+  input.form-control type='password' name='user[password]' placeholder='password'
+
+  input.form-control type='password' name='user[repeat_password]' placeholder='repeat password'
+
+  button.btn.btn-lg.btn-primary.btn-block type='submit' Sign up 

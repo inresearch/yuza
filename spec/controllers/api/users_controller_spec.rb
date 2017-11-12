@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Api::UsersController, type: :controller do
   let(:host) { create_host }
-  let(:params) { {user: user_attributes, password: password_attributes, host:{secret: host.secret}} }
+  let(:params) { {user: user_attributes, host:{secret: host.secret}} }
   before { params.delete(:id) }
   before { Timecop.freeze(Time.local(2020)) }
   after { Timecop.return }
@@ -20,7 +20,6 @@ RSpec.describe Api::UsersController, type: :controller do
           id: User.first.id,
           name: "Adam",
           email: "adam@netinmax.com",
-          phone: nil,
           created_at: 1577811600.0,
           updated_at: 1577811600.0
         }
@@ -54,14 +53,6 @@ RSpec.describe Api::UsersController, type: :controller do
       expect(User.first.valid_password?('Aloha12345', app: 'pageok')).to eq false
       put :update, params: {password: {password: 'Aloha12345', app: 'pageok'}, id: User.first.id, host: {secret: host.secret}}
       expect(parsed_body[:success]).to eq true
-      expect(User.first.valid_password?('Aloha12345', app: 'pageok')).to eq true
-    end
-
-    it 'can create password when instance is missing' do
-      User.first.passwords.destroy_all
-      expect(User.first.passwords).to be_empty
-      put :update, params: {password: {password: 'Aloha12345', app: 'pageok'}, id: User.first.id, host: {secret: host.secret}}
-      expect(User.first.passwords).to_not be_empty
       expect(User.first.valid_password?('Aloha12345', app: 'pageok')).to eq true
     end
 

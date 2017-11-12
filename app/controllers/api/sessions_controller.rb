@@ -9,7 +9,7 @@ class Api::SessionsController < Api::ApiController
     user_params = create_params[:user]
 
     u = User.email(user_params[:email]).first!
-    is_valid = u.valid_password?(user_params[:password], app: user_params[:app])
+    is_valid = u.valid_password?(user_params[:password])
     s = Session.new(
       app: user_params[:app],
       user: u,

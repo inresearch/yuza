@@ -1,27 +1,19 @@
 def user_attributes
   {
     name: 'Adam',
-    email: 'adam@netinmax.com'
-  }
-end
-
-def password_attributes
-  {
-    app: 'pageok',
+    email: 'adam@netinmax.com',
     password: 'Password01'
   }
 end
 
-def build_user
-  User.new(user_attributes)
+def build_user(host: create_host)
+  user = User.new(user_attributes)
+  user.host = host
+  user
 end
 
-def create_user
-  u = build_user; u.save!; u
-end
-
-def create_password(u, attributes={})
-  u.init_new_password(attributes).save!
+def create_user(host: create_host)
+  u = build_user(host: host); u.save!; u
 end
 
 def create_session(u, app='pageok')

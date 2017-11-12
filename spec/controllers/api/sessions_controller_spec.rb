@@ -2,10 +2,7 @@ require "rails_helper"
 
 describe Api::SessionsController, type: :controller do
   let(:host) { create_host }
-  let(:user) { create_user }
-  before {
-    create_password(user, password_attributes)
-  }
+  let(:user) { create_user(host: host) }
 
   context 'creating session' do
     let(:params) {{
